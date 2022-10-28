@@ -2,18 +2,17 @@ import { useEffect,useRef,useState } from "react";
 
 function App() {
   const inputRef= useRef();
-  const[output,setOutput]= useState("")
+  const[outputValue,setOutputValue]= useState("")
   const[inputValue,setInputValue] = useState("")
   const[inputMetValue,setInputMetValue] = useState("km")
   const[outputMetValue,setOutputMetValue] = useState("km")
   const[message,setMessage] = useState("")
-  let check = 0;
   let checkInput
   useEffect(()=>{
-    setOutput(0)
+    setOutputValue(0)
   },[inputValue]) 
   
-  const met=()=>{
+  const met = () => {
     switch (inputMetValue){
       case 'km':
         return  +inputValue * 1000;
@@ -50,7 +49,7 @@ function App() {
         return  checkInput *1000;
     }
   }
-  const isNumber= (inputValue)=>{
+  const isNumber = (inputValue) => {
     if (Number.isNaN(+inputValue)  === false){
       return "true"
     }else {
@@ -70,9 +69,9 @@ function App() {
         setMessage("Please choose the value of output")
       }
       checkInput = met()
-      setOutput(String(out()))
+      setOutputValue(String(out()))
       inputRef.current.focus();
-      if(output!=0){
+      if(outputValue !== 0){
         inputRef.current.focus();
         setInputValue('')
       }
@@ -91,7 +90,7 @@ function App() {
   const handleOnChange = (e)=>{
     setInputValue(e.target.value)
   }
-  const handleOnKeyDown = (e) =>{
+  const handleKeyDown = (e) =>{
     if (e.code === "Enter"){
       handleConvert();
     }
@@ -107,7 +106,7 @@ function App() {
             <div className="flex flex-col w-1/4">
               <input type="text" className="text-3xl rounded-lg p-2"
               onChange={(e)=>handleOnChange(e)}
-              onKeyDown={(e)=>handleOnKeyDown(e)}
+              onKeyDown={(e)=>handleKeyDown(e)}
               ref={inputRef}
               value={inputValue}
               ></input>
@@ -127,7 +126,7 @@ function App() {
               <div className={message === "Successful!" ? "mt-4 italic text-center text-2xl text-green-700" : "mt-4 italic text-center text-2xl text-red-900 animate-pulse "}>{message}</div>
             </div>
             <div className="flex flex-col w-1/4">
-              <input type="text" value={output} className="text-3xl rounded-lg p-2"></input>
+              <input type="text" value={outputValue} className="text-3xl rounded-lg p-2"></input>
               <select onChange={(e)=>handleMetValueOutput(e)} className="mt-4 h-[36px] text-lg rounded-lg">
                 <option value="km">Km</option>
                 <option value="ha">Ha</option>
